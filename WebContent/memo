@@ -1,0 +1,88 @@
+--회원 DB
+
+drop table member purge;
+create table member(
+	mnum number primary key,
+	id varchar2(60) not null,
+	pw varchar2(12) not null
+);
+
+drop sequence member_seq ;
+create sequence member_seq  
+increment by 1
+start with 1
+minvalue 1
+maxvalue 10000
+nocache;
+
+insert into member 
+values(member_seq.nextval, 'kwon', '1234');
+
+insert into member 
+values(member_seq.nextval, 'kim', '1234');
+
+--게시판 DB
+
+drop table board purge;
+create table board(
+	bnum number primary key,
+	writer varchar2(60) not null,
+	subject varchar2(60) not null,
+	content varchar2(90) not null,
+	readcount int default 0
+);
+
+drop sequence board_seq ;
+create sequence board_seq
+increment by 1
+start with 1
+minvalue 1
+maxvalue 10000
+nocache;
+
+insert into board 
+values(board_seq.nextval, '권현', '코로나', '코로나 방역정책');
+
+
+--댓글 DB
+
+drop table comm purge;
+create table comm(
+	cnum number primary key,
+	bnum number not null,
+	mnum number not null,
+	ccomment varchar2(90) not null,
+	good int default 0,
+	bad int default 0
+);
+
+drop sequence comm_seq ;
+create sequence comm_seq
+increment by 1
+start with 1
+minvalue 1
+maxvalue 10000
+nocache;
+
+
+--답글 DB
+
+drop table reply purge;
+create table reply(
+	rnum number primary key,
+	cnum number not null,
+	rid varchar2(60) not null,
+	rcomment varchar2(90) not null,
+	good int default 0,
+	bad int default 0
+);
+
+drop sequence reply_seq ;
+create sequence reply_seq
+increment by 1
+start with 1
+minvalue 1
+maxvalue 10000
+nocache;
+
+commit;
